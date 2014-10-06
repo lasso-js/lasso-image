@@ -28,8 +28,8 @@ require('optimizer').configure({
 The following code can be used to get image info (URL, width and height) on both the server and the client:
 
 ```javascript
-var optimizerImages = require('optimizer-image');
-optimizerImages.getImageInfo(require.resolve('./my-image.png'), function(err, imageInfo) {
+var optimizerImage = require('optimizer-image');
+optimizerImage.getImageInfo(require.resolve('./my-image.png'), function(err, imageInfo) {
     if (err) {
         // Handle the error
     }
