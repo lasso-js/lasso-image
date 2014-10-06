@@ -6,10 +6,10 @@ var expect = require('chai').expect;
 var nodePath = require('path');
 var fs = require('fs');
 
-var optimizerImagesPlugin = require('../'); // Load this module just to make sure it works
+var optimizerImagePlugin = require('../'); // Load this module just to make sure it works
 var optimizer = require('optimizer');
 
-describe('optimizer-images' , function() {
+describe('optimizer-image' , function() {
 
     beforeEach(function(done) {
         done();
@@ -17,8 +17,8 @@ describe('optimizer-images' , function() {
 
     it('should allow for reading image info on the server', function(done) {
 
-        var optimizerImages = require('../');
-        optimizerImages.getImageInfo(require.resolve('./fixtures/ebay.png'), function(err, imageInfo) {
+        var optimizerImage = require('../');
+        optimizerImage.getImageInfo(require.resolve('./fixtures/ebay.png'), function(err, imageInfo) {
             expect(imageInfo.url).to.equal('static/ebay-73498128.png');
             expect(imageInfo.width).to.equal(174);
             expect(imageInfo.height).to.equal(30);
@@ -36,7 +36,7 @@ describe('optimizer-images' , function() {
                 bundlingEnabled: true,
                 plugins: [
                     {
-                        plugin: optimizerImagesPlugin,
+                        plugin: optimizerImagePlugin,
                         config: {
 
                         }

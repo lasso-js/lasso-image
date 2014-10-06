@@ -1,4 +1,4 @@
-optimizer-images
+optimizer-image
 ================
 
 This module provides a plugin for the [RaptorJS Optimizer](https://github.com/raptorjs/optimizer) and a JavaScript API
@@ -9,7 +9,7 @@ that allows image info (URL, width and height) to be retrieved on both the serve
 Install the plugin:
 
 ```
-npm install optimizer-images --save
+npm install optimizer-image --save
 ```
 
 Enable the plugin:
@@ -17,7 +17,7 @@ Enable the plugin:
 ```javascript
 require('optimizer').configure({
     plugins: [
-        'optimizer-images',
+        'optimizer-image',
         ...
     ]
 })
@@ -28,7 +28,7 @@ require('optimizer').configure({
 The following code can be used to get image info (URL, width and height) on both the server and the client:
 
 ```javascript
-var optimizerImages = require('optimizer-images');
+var optimizerImages = require('optimizer-image');
 optimizerImages.getImageInfo(require.resolve('./my-image.png'), function(err, imageInfo) {
     if (err) {
         // Handle the error
