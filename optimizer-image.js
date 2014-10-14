@@ -68,8 +68,9 @@ plugin.getImageInfo = function(path, options, callback) {
         optimizerContext = pageOptimizer.createOptimizerContext({});
     }
 
+    // NOTE: optimizerContext.getFileLastModified caches file timestamps
     optimizerContext.getFileLastModified(path, function(err, lastModified) {
-        var cache = optimizerContext.cache.getCache('optimizer-images');
+        var cache = optimizerContext.cache.getCache('optimizer-image');
         cache.get(
             path,
             {
