@@ -19,7 +19,7 @@ describe('optimizer-image' , function() {
 
         var optimizerImage = require('../');
         optimizerImage.getImageInfo(require.resolve('./fixtures/ebay.png'), function(err, imageInfo) {
-            expect(imageInfo.url).to.equal('static/ebay-73498128.png');
+            expect(imageInfo.url).to.equal('/static/ebay-73498128.png');
             expect(imageInfo.width).to.equal(174);
             expect(imageInfo.height).to.equal(30);
             done();
@@ -62,7 +62,7 @@ describe('optimizer-image' , function() {
                     return done(err);
                 }
 
-                var output = fs.readFileSync(nodePath.join(__dirname, 'static/testPage.js'), 'utf8');
+                var output = fs.readFileSync(nodePath.join(__dirname, '/static/testPage.js'), 'utf8');
                 expect(output).to.contain('174');
                 expect(output).to.contain('30');
                 expect(output).to.contain('static/ebay-73498128.png');
