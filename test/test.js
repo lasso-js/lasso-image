@@ -65,7 +65,7 @@ describe('optimizer-image' , function() {
                 var output = fs.readFileSync(nodePath.join(__dirname, '/static/testPage.js'), 'utf8');
                 expect(output).to.contain('174');
                 expect(output).to.contain('30');
-                expect(output).to.contain('static/ebay-73498128.png');
+                expect(output).to.contain('static/ebay.png');
                 expect(output).to.contain('"/test/fixtures/ebay.png"');
                 optimizer.flushAllCaches(done);
             });
