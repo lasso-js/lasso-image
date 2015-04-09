@@ -65,7 +65,7 @@ plugin.getImageInfo = function(path, options, callback) {
     }
 
     if (!lassoContext) {
-        lassoContext = theLasso.createOptimizerContext({});
+        lassoContext = theLasso.createLassoContext({});
     }
 
     // NOTE: lassoContext.getFileLastModified caches file timestamps

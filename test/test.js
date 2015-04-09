@@ -57,7 +57,7 @@ describe('lasso-image' , function() {
                 ],
                 from: module
             },
-            function(err, optimizedPage) {
+            function(err, lassoPageResult) {
                 if (err) {
                     return done(err);
                 }
