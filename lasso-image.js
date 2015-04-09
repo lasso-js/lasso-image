@@ -52,20 +52,20 @@ plugin.getImageInfo = function(path, options, callback) {
         options = null;
     }
 
-    var pageOptimizer;
+    var theLasso;
     var lassoContext;
 
     if (options) {
-        pageOptimizer = options.lasso;
+        theLasso = options.lasso;
         lassoContext = options.lassoContext;
     }
 
-    if (!pageOptimizer) {
-        pageOptimizer = lasso.defaultPageOptimizer;
+    if (!theLasso) {
+        theLasso = lasso.defaultPageOptimizer;
     }
 
     if (!lassoContext) {
-        lassoContext = pageOptimizer.createOptimizerContext({});
+        lassoContext = theLasso.createOptimizerContext({});
     }
 
     // NOTE: lassoContext.getFileLastModified caches file timestamps
@@ -79,7 +79,7 @@ plugin.getImageInfo = function(path, options, callback) {
                     var imageInfo = {};
                     parallel([
                             function(callback) {
-                                pageOptimizer.optimizeResource(path, lassoContext, function(err, resourceInfo) {
+                                theLasso.optimizeResource(path, lassoContext, function(err, resourceInfo) {
                                     imageInfo.url = resourceInfo.url;
                                     callback();
                                 });

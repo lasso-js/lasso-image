@@ -28,7 +28,7 @@ describe('lasso-image' , function() {
 
     it('should compile a image into a JavaScript module', function(done) {
 
-        var pageOptimizer = lasso.create({
+        var myLasso = lasso.create({
                 fileWriter: {
                     fingerprintsEnabled: false,
                     outputDir: nodePath.join(__dirname, 'static')
@@ -50,7 +50,7 @@ describe('lasso-image' , function() {
                 ]
             });
 
-        pageOptimizer.optimizePage({
+        myLasso.optimizePage({
                 name: 'testPage',
                 dependencies: [
                     'require: ./fixtures/ebay.png'
