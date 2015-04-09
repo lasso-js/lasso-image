@@ -6,10 +6,10 @@ var expect = require('chai').expect;
 var nodePath = require('path');
 var fs = require('fs');
 
-var optimizerImagePlugin = require('../'); // Load this module just to make sure it works
-var optimizer = require('optimizer');
+var lassoImagePlugin = require('../'); // Load this module just to make sure it works
+var lasso = require('lasso');
 
-describe('optimizer-image' , function() {
+describe('lasso-image' , function() {
 
     beforeEach(function(done) {
         done();
@@ -17,8 +17,8 @@ describe('optimizer-image' , function() {
 
     it('should allow for reading image info on the server', function(done) {
 
-        var optimizerImage = require('../');
-        optimizerImage.getImageInfo(require.resolve('./fixtures/ebay.png'), function(err, imageInfo) {
+        var lassoImage = require('../');
+        lassoImage.getImageInfo(require.resolve('./fixtures/ebay.png'), function(err, imageInfo) {
             expect(imageInfo.url).to.equal('/static/ebay-73498128.png');
             expect(imageInfo.width).to.equal(174);
             expect(imageInfo.height).to.equal(30);
@@ -28,7 +28,7 @@ describe('optimizer-image' , function() {
 
     it('should compile a image into a JavaScript module', function(done) {
 
-        var pageOptimizer = optimizer.create({
+        var pageOptimizer = lasso.create({
                 fileWriter: {
                     fingerprintsEnabled: false,
                     outputDir: nodePath.join(__dirname, 'static')
@@ -36,13 +36,13 @@ describe('optimizer-image' , function() {
                 bundlingEnabled: true,
                 plugins: [
                     {
-                        plugin: optimizerImagePlugin,
+                        plugin: lassoImagePlugin,
                         config: {
 
                         }
                     },
                     {
-                        plugin: 'optimizer-require',
+                        plugin: 'lasso-require',
                         config: {
                             includeClient: false
                         }
@@ -67,7 +67,7 @@ describe('optimizer-image' , function() {
                 expect(output).to.contain('30');
                 expect(output).to.contain('static/ebay.png');
                 expect(output).to.contain('"/test/fixtures/ebay.png"');
-                optimizer.flushAllCaches(done);
+                lasso.flushAllCaches(done);
             });
     });
 

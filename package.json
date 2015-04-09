@@ -1,14 +1,14 @@
 {
-    "name": "optimizer-image",
+    "name": "lasso-image",
     "description": "Get optimized image info (URL, width and height) on both the server and the client",
     "keywords": [
-        "optimizer",
-        "optimizer-plugin",
+        "lasso",
+        "lasso-plugin",
         "image"
     ],
     "repository": {
         "type": "git",
-        "url": "https://github.com/raptorjs/optimizer-image.git"
+        "url": "https://github.com/raptorjs/lasso-image.git"
     },
     "scripts": {
         "test": "node_modules/.bin/mocha --ui bdd --reporter spec ./test"
@@ -26,13 +26,13 @@
     "devDependencies": {
         "chai": "~1.8.1",
         "mocha": "~1.15.1",
-        "optimizer": "^1.0.10"
+        "lasso": "^1.0.10"
     },
     "license": "Apache License v2.0",
     "bin": {},
-    "main": "./optimizer-image.js",
+    "main": "./lasso-image.js",
     "browser": {
-        "./optimizer-image.js": "./optimizer-image-browser.js"
+        "./lasso-image.js": "./lasso-image-browser.js"
     },
     "publishConfig": {
         "registry": "https://registry.npmjs.org/"

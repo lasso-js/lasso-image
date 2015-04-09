@@ -1,15 +1,15 @@
-var optimizer = require('optimizer');
+var lasso = require('lasso');
 var parallel = require('raptor-async/parallel');
 var imageSize = require('image-size');
 
-var plugin = function(optimizer, config) {
+var plugin = function(lasso, config) {
 
     var handler = {
         properties: {
             'path': 'string'
         },
 
-        init: function(optimizerContext, callback) {
+        init: function(lassoContext, callback) {
             if (!this.path) {
                 return callback(new Error('"path" is required for a Marko dependency'));
             }
@@ -20,9 +20,9 @@ var plugin = function(optimizer, config) {
 
         object: true, // We are exporting a simple JavaScript object
 
-        read: function(optimizerContext, callback) {
+        read: function(lassoContext, callback) {
 
-            plugin.getImageInfo(this.path, { optimizer: optimizer}, function(err, imageInfo) {
+            plugin.getImageInfo(this.path, { lasso: lasso}, function(err, imageInfo) {
                 if (err) {
                     return callback(err);
                 }
@@ -31,8 +31,8 @@ var plugin = function(optimizer, config) {
             });
         },
 
-        getLastModified: function(optimizerContext, callback) {
-            optimizerContext.getFileLastModified(this.path, callback);
+        getLastModified: function(lassoContext, callback) {
+            lassoContext.getFileLastModified(this.path, callback);
         }
     };
 
@@ -41,7 +41,7 @@ var plugin = function(optimizer, config) {
      'jpg',
      'gif',
      'webp'].forEach(function(ext) {
-        optimizer.dependencies.registerRequireType(ext, handler);
+        lasso.dependencies.registerRequireType(ext, handler);
      });
 };
 
@@ -53,24 +53,24 @@ plugin.getImageInfo = function(path, options, callback) {
     }
 
     var pageOptimizer;
-    var optimizerContext;
+    var lassoContext;
 
     if (options) {
-        pageOptimizer = options.optimizer;
-        optimizerContext = options.optimizerContext;
+        pageOptimizer = options.lasso;
+        lassoContext = options.lassoContext;
     }
 
     if (!pageOptimizer) {
-        pageOptimizer = optimizer.defaultPageOptimizer;
+        pageOptimizer = lasso.defaultPageOptimizer;
     }
 
-    if (!optimizerContext) {
-        optimizerContext = pageOptimizer.createOptimizerContext({});
+    if (!lassoContext) {
+        lassoContext = pageOptimizer.createOptimizerContext({});
     }
 
-    // NOTE: optimizerContext.getFileLastModified caches file timestamps
-    optimizerContext.getFileLastModified(path, function(err, lastModified) {
-        var cache = optimizerContext.cache.getCache('optimizer-image');
+    // NOTE: lassoContext.getFileLastModified caches file timestamps
+    lassoContext.getFileLastModified(path, function(err, lastModified) {
+        var cache = lassoContext.cache.getCache('lasso-image');
         cache.get(
             path,
             {
@@ -79,7 +79,7 @@ plugin.getImageInfo = function(path, options, callback) {
                     var imageInfo = {};
                     parallel([
                             function(callback) {
-                                pageOptimizer.optimizeResource(path, optimizerContext, function(err, resourceInfo) {
+                                pageOptimizer.optimizeResource(path, lassoContext, function(err, resourceInfo) {
                                     imageInfo.url = resourceInfo.url;
                                     callback();
                                 });

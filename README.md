@@ -1,7 +1,7 @@
-optimizer-image
+lasso-image
 ================
 
-This module provides a plugin for the [RaptorJS Optimizer](https://github.com/raptorjs/optimizer) and a JavaScript API
+This module provides a plugin for the [RaptorJS Optimizer](https://github.com/raptorjs/lasso) and a JavaScript API
 that allows image info (URL, width and height) to be retrieved on both the server and the client.
 
 # Installation
@@ -9,15 +9,15 @@ that allows image info (URL, width and height) to be retrieved on both the serve
 Install the plugin:
 
 ```
-npm install optimizer-image --save
+npm install lasso-image --save
 ```
 
 Enable the plugin:
 
 ```javascript
-require('optimizer').configure({
+require('lasso').configure({
     plugins: [
-        'optimizer-image',
+        'lasso-image',
         ...
     ]
 })
@@ -28,8 +28,8 @@ require('optimizer').configure({
 The following code can be used to get image info (URL, width and height) on both the server and the client:
 
 ```javascript
-var optimizerImage = require('optimizer-image');
-optimizerImage.getImageInfo(require.resolve('./my-image.png'), function(err, imageInfo) {
+var lassoImage = require('lasso-image');
+lassoImage.getImageInfo(require.resolve('./my-image.png'), function(err, imageInfo) {
     if (err) {
         // Handle the error
     }
