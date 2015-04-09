@@ -61,7 +61,7 @@ plugin.getImageInfo = function(path, options, callback) {
     }
 
     if (!theLasso) {
-        theLasso = lasso.defaultPageOptimizer;
+        theLasso = lasso.defaultLasso;
     }
 
     if (!lassoContext) {
