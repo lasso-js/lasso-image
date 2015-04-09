@@ -1,7 +1,7 @@
 lasso-image
 ================
 
-This module provides a plugin for the [Lasso.js](https://github.com/raptorjs/lasso) and a JavaScript API
+This module provides a plugin for the [Lasso.js](https://github.com/lasso-js/lasso) and a JavaScript API
 that allows image info (URL, width and height) to be retrieved on both the server and the client.
 
 # Installation
