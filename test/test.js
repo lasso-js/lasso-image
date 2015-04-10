@@ -50,7 +50,7 @@ describe('lasso-image' , function() {
                 ]
             });
 
-        myLasso.optimizePage({
+        myLasso.lassoPage({
                 name: 'testPage',
                 dependencies: [
                     'require: ./fixtures/ebay.png'

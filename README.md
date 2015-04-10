@@ -40,5 +40,5 @@ lassoImage.getImageInfo(require.resolve('./my-image.png'), function(err, imageIn
 });
 ```
 
-Referenced images will automatically be optimized and written and the URL for the optimized image will be returned. The
+Referenced images will automatically be bundled and written and the URL for the bundled image will be returned. The
 result is cached (on the server) so there is no performance penalty in making subsequent calls for the same image path.

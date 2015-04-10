@@ -79,7 +79,7 @@ plugin.getImageInfo = function(path, options, callback) {
                     var imageInfo = {};
                     parallel([
                             function(callback) {
-                                theLasso.optimizeResource(path, lassoContext, function(err, resourceInfo) {
+                                theLasso.lassoResource(path, lassoContext, function(err, resourceInfo) {
                                     imageInfo.url = resourceInfo.url;
                                     callback();
                                 });
