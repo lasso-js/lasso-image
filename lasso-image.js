@@ -1,6 +1,15 @@
 var lasso = require('lasso');
 var parallel = require('raptor-async/parallel');
 var imageSize = require('image-size');
+var nodePath = require('path');
+
+var IMAGE_SIZE_WHITELIST = {
+    '.png': true,
+    '.jpeg': true,
+    '.jpg': true,
+    '.gif': true,
+    '.webp': true
+};
 
 var plugin = function(lasso, config) {
 
@@ -36,15 +45,17 @@ var plugin = function(lasso, config) {
         }
     };
 
-    ['png',
-     'jpeg',
-     'jpg',
-     'gif',
-     'webp'].forEach(function(ext) {
+    [
+        'png',
+        'jpeg',
+        'jpg',
+        'gif',
+        'svg',
+        'webp'
+    ].forEach(function(ext) {
         lasso.dependencies.registerRequireType(ext, handler);
      });
 };
-
 
 plugin.getImageInfo = function(path, options, callback) {
     if (typeof options === 'function') {
@@ -77,21 +88,28 @@ plugin.getImageInfo = function(path, options, callback) {
                 lastModified: lastModified,
                 builder: function(callback) {
                     var imageInfo = {};
-                    parallel([
-                            function(callback) {
-                                theLasso.lassoResource(path, lassoContext, function(err, resourceInfo) {
-                                    imageInfo.url = resourceInfo.url;
-                                    callback();
-                                });
-                            },
-                            function(callback) {
-                                imageSize(path, function (err, dimensions) {
-                                    imageInfo.width = dimensions.width;
-                                    imageInfo.height = dimensions.height;
-                                    callback();
-                                });
-                            }
-                        ],
+                    var work = [
+                        function(callback) {
+                            theLasso.lassoResource(path, lassoContext, function(err, resourceInfo) {
+                                imageInfo.url = resourceInfo.url;
+                                callback();
+                            });
+                        }
+                    ];
+
+                    var ext = nodePath.extname(path);
+                    if (IMAGE_SIZE_WHITELIST[ext]) {
+                        work.push(function(callback) {
+                            imageSize(path, function (err, dimensions) {
+                                imageInfo.width = dimensions.width;
+                                imageInfo.height = dimensions.height;
+
+                                callback();
+                            });
+                        });
+                    }
+
+                    parallel(work,
                         function(err) {
                             if (err) {
                                 return callback(err);
