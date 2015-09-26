@@ -1,4 +1,3 @@
-var lasso = require('lasso');
 var parallel = require('raptor-async/parallel');
 var imageSize = require('image-size');
 var nodePath = require('path');
@@ -72,7 +71,7 @@ plugin.getImageInfo = function(path, options, callback) {
     }
 
     if (!theLasso) {
-        theLasso = lasso.defaultLasso;
+        theLasso = (plugin.lasso || require('lasso')).defaultLasso;
     }
 
     if (!lassoContext) {
