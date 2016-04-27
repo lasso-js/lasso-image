@@ -65,8 +65,53 @@ describe('lasso-image' , function() {
                 var output = fs.readFileSync(nodePath.join(__dirname, '/static/testPage.js'), {encoding: 'utf8'});
                 expect(output).to.contain('174');
                 expect(output).to.contain('30');
-                expect(output).to.contain('static/ebay.png');
-                expect(output).to.contain('"/test/fixtures/ebay.png"');
+                expect(output).to.contain('/static');
+                expect(output).to.contain('ebay.png');
+                lasso.flushAllCaches(done);
+            });
+    });
+
+    it('should compile a image into a JavaScript module when not using require', function(done) {
+
+        var myLasso = lasso.create({
+                fileWriter: {
+                    fingerprintsEnabled: false,
+                    outputDir: nodePath.join(__dirname, 'static')
+                },
+                bundlingEnabled: true,
+                plugins: [
+                    {
+                        plugin: lassoImagePlugin,
+                        config: {
+
+                        }
+                    },
+                    {
+                        plugin: 'lasso-require',
+                        config: {
+                            includeClient: false
+                        }
+                    }
+                ]
+            });
+
+        myLasso.lassoPage({
+                name: 'testPage2',
+                dependencies: [
+                    './fixtures/ebay.png'
+                ],
+                from: module
+            },
+            function(err, lassoPageResult) {
+                if (err) {
+                    return done(err);
+                }
+
+                var output = fs.readFileSync(nodePath.join(__dirname, '/static/testPage.js'), {encoding: 'utf8'});
+                expect(output).to.contain('174');
+                expect(output).to.contain('30');
+                expect(output).to.contain('/static');
+                expect(output).to.contain('ebay.png');
                 lasso.flushAllCaches(done);
             });
     });
