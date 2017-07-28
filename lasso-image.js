@@ -64,10 +64,12 @@ plugin.getImageInfo = function(path, options, callback) {
 
     var theLasso;
     var lassoContext;
+    var renderContext;
 
     if (options) {
         theLasso = options.lasso;
         lassoContext = options.lassoContext;
+        renderContext = options.renderContext;
     }
 
     if (!theLasso) {
@@ -75,7 +77,8 @@ plugin.getImageInfo = function(path, options, callback) {
     }
 
     if (!lassoContext) {
-        lassoContext = theLasso.createLassoContext({});
+        var options = renderContext ? { data: { renderContext } } : {};
+        lassoContext = theLasso.createLassoContext(options);
     }
 
     // NOTE: lassoContext.getFileLastModified caches file timestamps

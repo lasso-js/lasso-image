@@ -116,5 +116,43 @@ describe('lasso-image' , function() {
             });
     });
 
+    it('should allow passing the renderContext', function(done) {
+        class Writer {
+            writeResource(reader, lassoContext, callback) {
+                var requestContext = lassoContext.data.renderContext.stream;
+
+                var protocol = requestContext.secure ? 'https:' : 'http:';
+
+                callback(null, {
+                    url: protocol + '//static.example.com/ebay.png'
+                });
+            }
+        }
+
+        var myLasso = lasso.create();
+        myLasso.writer = new Writer();
+        myLasso.on('buildCacheKey', function(eventArgs) {
+            var lassoContext = eventArgs.context;
+            var requestContext = lassoContext.data.renderContext.stream;
+
+            var cacheKey = eventArgs.cacheKey;
+
+            if (requestContext.secure) {
+                cacheKey.add('secure');
+            }
+        });
+
+        var mockRenderContext = {
+            stream: {
+                secure: true
+            }
+        };
+
+        var lassoImage = require('../');
+        lassoImage.getImageInfo(require.resolve('./fixtures/ebay.png'), { lasso:myLasso, renderContext:mockRenderContext }, function(err, imageInfo) {
+            expect(imageInfo.url).to.equal('https://static.example.com/ebay.png');
+            done();
+        });
+    });
 
 });
