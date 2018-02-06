@@ -77,7 +77,11 @@ plugin.getImageInfo = function(path, options, callback) {
     }
 
     if (!lassoContext) {
-        var options = renderContext ? { data: { renderContext } } : {};
+        var options = renderContext ? {
+          data: {
+            renderContext: renderContext
+          }
+        } : {};
         lassoContext = theLasso.createLassoContext(options);
     }
 

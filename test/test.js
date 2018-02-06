@@ -117,16 +117,15 @@ describe('lasso-image' , function() {
     });
 
     it('should allow passing the renderContext', function(done) {
-        class Writer {
-            writeResource(reader, lassoContext, callback) {
-                var requestContext = lassoContext.data.renderContext.stream;
+        function Writer () {}
 
-                var protocol = requestContext.secure ? 'https:' : 'http:';
+        Writer.prototype.writeResource = function (reader, lassoContext, callback) {
+            var requestContext = lassoContext.data.renderContext.stream;
+            var protocol = requestContext.secure ? 'https:' : 'http:';
 
-                callback(null, {
-                    url: protocol + '//static.example.com/ebay.png'
-                });
-            }
+            callback(null, {
+                url: protocol + '//static.example.com/ebay.png'
+            });
         }
 
         var myLasso = lasso.create();
